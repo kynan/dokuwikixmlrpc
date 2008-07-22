@@ -326,20 +326,20 @@ class Callback(object):
             page_id = self._get_page_id()
 
             if not self._parser.values.timestamp:
-                return (self.dokuwiki.__getattribute__(option)(page_id), 'plain')
+                return (callback(page_id), 'plain')
             else:
-                return (self.dokuwiki.__getattribute__(option)(page_id, self._parser.values.timestamp), 'plain')
+                return (callback(page_id, self._parser.values.timestamp), 'plain')
 
         elif option == 'backlinks':
             page_id = self._get_page_id()
-            return (self.dokuwiki.__getattribute__(option)(page_id), 'list')
+            return (callback(page_id), 'list')
 
         elif option == 'page_info' or option == 'page_versions' or option == 'links':
             page_id = self._get_page_id()
-            return (self.dokuwiki.__getattribute__(option)(page_id), 'dict')
+            return (callback(page_id), 'dict')
 
         elif option == 'all_pages':
-            return (self.dokuwiki.__getattribute__(option)(), 'list')
+            return (callback(), 'list')
 
         elif option == 'recent_changes':
             from time import time
