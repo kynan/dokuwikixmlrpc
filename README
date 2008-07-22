@@ -1,0 +1,8 @@
+dokuwikixmlrpc is a python module which implements DokuWikis XML-RPC interface.
+It can be used to send/retrieve data from remote Dokuwiki instances.
+
+All documentation is available online at:
+http://www.chimeric.de/projects/dokuwiki/dokuwikixmlrpc
+
+(c) 2005 - 2008 by Michael Klier <chi@chimeric.de>
+See COPYING for license info.
