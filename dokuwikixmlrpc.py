@@ -99,10 +99,10 @@ class DokuWikiClient(object):
         self._url = url
         self._user = user
         self._passwd = passwd
-        self._user_agent = ' '.join[ 'DokuWikiXMLRPC ', 
+        self._user_agent = ' '.join([ 'DokuWikiXMLRPC ', 
                                       __version__,
-                                      'by (www.chimeric.de)' ]
-        self._xmlrpc_init()
+                                      'by (www.chimeric.de)' ])
+
         self._xmlrpc = self._xmlrpc_init()
 
         try:
@@ -120,8 +120,8 @@ class DokuWikiClient(object):
         except HTTPError:
             raise DokuWikiURLError(self._url)
         
-        url = ''.join ['/lib/exe/xmlrpc.php?', 
-                        urlencode({'u': self._user, 'p':self._passwd}) ]
+        url = ''.join([ self._url, '/lib/exe/xmlrpc.php?', 
+                        urlencode({'u': self._user, 'p':self._passwd}) ])
 
         xmlrpclib.Transport.user_agent = self._user_agent
         xmlrpclib.SafeTransport.user_agent = self._user_agent
