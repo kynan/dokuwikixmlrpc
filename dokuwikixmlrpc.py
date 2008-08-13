@@ -20,7 +20,6 @@
 # for a copy of the GPLv2 License.
 ###############################################################################
 
-
 """DokuWiki XMLRPC module.
 
 This modules allows to interact with the XML-RPC interface of DokuWiki
@@ -58,11 +57,14 @@ class DokuWikiXMLRPCError(DokuWikiError):
 
     def __str__(self):
         """Format returned error message."""
-        return '<%s %s: \'%s\'>' % (self.__class__.__name__, self.page_id, self.message)
+        return '<%s %s: \'%s\'>' % (self.__class__.__name__, 
+                                    self.page_id, 
+                                    self.message)
 
 
 class DokuWikiURLError(DokuWikiError):
-    """Triggered when the URL supplied to DokuWikiClient is not valpage_id/reachable."""
+    """Triggered when the URL supplied to DokuWikiClient is not
+    valpage_id/reachable."""
 
     def __init__(self, url):
         """Initalize and call anchestor __init__()."""
@@ -71,7 +73,8 @@ class DokuWikiURLError(DokuWikiError):
 
     def __str__(self):
         """Format returned error message."""
-        return '%s: Could not connect to <%s>' % (self.__class__.__name__, self.message)
+        return '%s: Could not connect to <%s>' % (self.__class__.__name__, 
+                                                  self.message)
 
 
 class DokuWikiClient(object):
@@ -96,7 +99,9 @@ class DokuWikiClient(object):
         self._url = url
         self._user = user
         self._passwd = passwd
-        self._user_agent = 'DokuWikiXMLRPC ' + __version__ + 'by (www.chimeric.de)'
+        self._user_agent = ' '.join[ 'DokuWikiXMLRPC ', 
+                                      __version__,
+                                      'by (www.chimeric.de)' ]
         self._xmlrpc_init()
         self._xmlrpc = self._xmlrpc_init()
 
@@ -115,7 +120,8 @@ class DokuWikiClient(object):
         except HTTPError:
             raise DokuWikiURLError(self._url)
         
-        url = self._url + '/lib/exe/xmlrpc.php?' + urlencode({'u': self._user, 'p':self._passwd})
+        url = ''.join ['/lib/exe/xmlrpc.php?', 
+                        urlencode({'u': self._user, 'p':self._passwd}) ]
 
         xmlrpclib.Transport.user_agent = self._user_agent
         xmlrpclib.SafeTransport.user_agent = self._user_agent
@@ -310,7 +316,7 @@ class Callback(object):
 
 
     def _get_page_id(self):
-        """Check if the additional positional arguments contain a Wiki page id."""
+        """Check if the additional arguments contain a Wiki page id."""
         try:
             return self._parser.rargs.pop()
         except IndexError:
@@ -325,10 +331,12 @@ class Callback(object):
         if option == 'page' or option == 'page_html':
             page_id = self._get_page_id()
 
-            if not self._parser.values.timestamp:
+            timestamp = self._parser.values.timestamp
+
+            if not timestamp:
                 return (callback(page_id), 'plain')
             else:
-                return (callback(page_id, self._parser.values.timestamp), 'plain')
+                return (callback(page_id, timestamp), 'plain')
 
         elif option == 'backlinks':
             page_id = self._get_page_id()
@@ -343,9 +351,10 @@ class Callback(object):
 
         elif option == 'recent_changes':
             from time import time
-            if not self._parser.values.timestamp:
-                self._parser.values.timestamp = int(time())
-            return (callback(self._parser.values.timestamp), 'dict')
+            timestamp = self._parser.values.timestamp
+            if not timestamp:
+                timestamp = int(time())
+            return (callback(timestamp), 'dict')
 
 
 def main():
@@ -364,7 +373,7 @@ def main():
 
     parser.add_option('-u', '--user', 
             dest = 'user', 
-            help = 'The username to use when authenticating at the remote Wiki.')
+            help = 'Username to use when authenticating at the remote Wiki.')
 
     parser.add_option('-w', '--wiki',
             dest = 'wiki',
