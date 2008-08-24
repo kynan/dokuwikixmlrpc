@@ -32,6 +32,7 @@ __version__ = '0.1'
 
 
 import xmlrpclib
+import base64
 from urllib import urlencode
 from urllib2 import urlopen
 from urllib2 import HTTPError
@@ -259,13 +260,45 @@ class DokuWikiClient(object):
         except xmlrpclib.Fault, fault:
             raise DokuWikiXMLRPCError(fault)
 
-    def put_file(self, namespace, filename, name='', overwrite=None):
-        """Upload a file to a remote Wiki."""
-        pass
+    def get_file(self, file_id):
+        """Download a file from a remote Wiki."""
+        try:
+            return base64.b64decode(self._xmlrpc.wiki.getAttachment(file_id))
+        except xmlrpclib.Fault, fault:
+            raise DokuWikiXMLRPCError(fault)
 
-    def list_files(self, namespace):
+    def put_file(self, id, data, overwrite = False):
+        """Upload a file to a remote Wiki."""
+        try:
+            return self._xmlrpc.wiki.putAttachment(id, base64.b64encode(data), {'ow': overwrite})
+        except xmlrpclib.Fault, fault:
+            raise DokuWikiXMLRPCError(fault)
+
+    def delete_file(self, id):
+        """Delete a file from a remote wiki."""
+        try:
+            return self._xmlrpc.wiki.deleteAttachment(id)
+        except xmlrpclib.Fault, fault:
+            raise DokuWikiXMLRPCError(fault)
+
+    def file_info(self, file_id):
+        """Return information about a given file."""
+        try:
+            return self._xmlrpc.wiki.getAttachmentInfo(file_id)
+        except xmlrpclib.Fault, fault:
+            raise DokuWikiXMLRPCError(fault)
+
+    def list_files(self, namespace, recursive = False, pattern = None):
         """List files in a Wiki namespace."""
-        pass
+        options = {}
+        if recursive:
+            options['recursive'] = True
+        if pattern:
+            options['pattern'] = pattern
+        try:
+            return self._xmlrpc.wiki.getAttachments(namespace, options)
+        except xmlrpclib.Fault, fault:
+            raise DokuWikiXMLRPCError(fault)
 
 
 class Callback(object):
