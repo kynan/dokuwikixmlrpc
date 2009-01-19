@@ -186,7 +186,7 @@ class DokuWikiClient(object):
             raise DokuWikiXMLRPCError(fault)
 
 
-    def page_html(self, page_id, revision=None):
+    def page_html(self, page_id, prependToc=True, revision=None):
         """Return the (X)HTML body of a Wiki page.
 
         Optionally return the (X)HTML body of a given Wiki page version (see
