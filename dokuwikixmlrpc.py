@@ -88,7 +88,7 @@ class DokuWikiClient(object):
                 
     """
 
-    def __init__(self, url, user, passwd):
+    def __init__(self, url, user, passwd, http_basic_auth=True):
         """Initalize everything.
 
         Try to get a XML-RPC object. If this step fails a DokuWIKIXMLRPCError
@@ -100,6 +100,7 @@ class DokuWikiClient(object):
         self._url = url
         self._user = user
         self._passwd = passwd
+        self._http_basic_auth = http_basic_auth
         self._user_agent = ' '.join([ 'DokuWikiXMLRPC ', 
                                       __version__,
                                       'by (www.chimeric.de)' ])
@@ -121,8 +122,17 @@ class DokuWikiClient(object):
         except HTTPError:
             raise DokuWikiURLError(self._url)
         
-        url = ''.join([ self._url, '/lib/exe/xmlrpc.php?', 
-                        urlencode({'u': self._user, 'p':self._passwd}) ])
+        #url = ''.join([ self._url, '/lib/exe/xmlrpc.php?', 
+        #                urlencode({'u': self._user, 'p':self._passwd}) ])
+
+        script = '/lib/exe/xmlrpc.php'
+
+        if not self._http_basic_auth:
+            url = ''.join([ self._url, script, '?',
+                         urlencode({'u': self._user, 'p':self._passwd}) ])
+        else:
+            proto, url = self._url.split('://')
+            url = proto + '://' + self._user + ':' + self._passwd + '@' + url
 
         xmlrpclib.Transport.user_agent = self._user_agent
         xmlrpclib.SafeTransport.user_agent = self._user_agent
@@ -315,7 +325,8 @@ class Callback(object):
             try:
                 self.dokuwiki = DokuWikiClient(parser.values.wiki,
                                                parser.values.user,
-                                               parser.values.passwd)
+                                               parser.values.passwd,
+                                               parser.values.http_basic_auth)
             except DokuWikiXMLRPCError, error:
                 parser.error(error)
 
@@ -468,6 +479,12 @@ def main():
             dest = 'timestamp',
             type = 'int',
             help = 'Revision timestamp.')
+    
+    parser.add_option('--http-basic-auth',
+            dest = 'http_basic_auth',
+            action = 'store_true',
+            help = 'Use HTTP Basic Authentication.',
+            default=False)
 
     parser.parse_args()
 
