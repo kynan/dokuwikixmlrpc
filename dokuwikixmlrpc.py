@@ -87,7 +87,7 @@ class DokuWikiClient(object):
                 
     """
 
-    def __init__(self, url, user, passwd, http_basic_auth=True):
+    def __init__(self, url, user, passwd, http_basic_auth=False):
         """Initalize everything.
 
         Try to get a XML-RPC object. If this step fails a DokuWIKIXMLRPCError
