@@ -27,7 +27,6 @@ instances. It supports all methods of the DokuWiki XML-RPC interface.
 """
 
 __all__ = [ "DokuWikiClient" ]
-
 __version__ = '0.1'
 
 
@@ -122,9 +121,6 @@ class DokuWikiClient(object):
         except HTTPError:
             raise DokuWikiURLError(self._url)
         
-        #url = ''.join([ self._url, '/lib/exe/xmlrpc.php?', 
-        #                urlencode({'u': self._user, 'p':self._passwd}) ])
-
         script = '/lib/exe/xmlrpc.php'
 
         if not self._http_basic_auth:
@@ -196,7 +192,7 @@ class DokuWikiClient(object):
             raise DokuWikiXMLRPCError(fault)
 
 
-    def page_html(self, page_id, prependToc=True, revision=None):
+    def page_html(self, page_id, revision=None):
         """Return the (X)HTML body of a Wiki page.
 
         Optionally return the (X)HTML body of a given Wiki page version (see
@@ -277,17 +273,18 @@ class DokuWikiClient(object):
         except xmlrpclib.Fault, fault:
             raise DokuWikiXMLRPCError(fault)
 
-    def put_file(self, id, data, overwrite = False):
+    def put_file(self, file_id, data, overwrite = False):
         """Upload a file to a remote Wiki."""
         try:
-            return self._xmlrpc.wiki.putAttachment(id, base64.b64encode(data), {'ow': overwrite})
+            return self._xmlrpc.wiki.putAttachment(file_id, 
+                   base64.b64encode(data), {'ow': overwrite})
         except xmlrpclib.Fault, fault:
             raise DokuWikiXMLRPCError(fault)
 
-    def delete_file(self, id):
+    def delete_file(self, file_id):
         """Delete a file from a remote wiki."""
         try:
-            return self._xmlrpc.wiki.deleteAttachment(id)
+            return self._xmlrpc.wiki.deleteAttachment(file_id)
         except xmlrpclib.Fault, fault:
             raise DokuWikiXMLRPCError(fault)
 
@@ -334,17 +331,17 @@ class Callback(object):
                 parser.error(error)
 
             self._parser = parser
-            (data, format) = self.dispatch(option.dest)
+            (data, output_format) = self.dispatch(option.dest)
 
             if data:
-                if format == 'plain':
+                if output_format == 'plain':
                     print data
 
-                elif format == 'list':
+                elif output_format == 'list':
                     for item in data:
                         print item
 
-                elif format == 'dict':
+                elif output_format == 'dict':
                     if type(data) == type([]):
                         for item in data:
                             for key in item.keys():
