@@ -64,7 +64,7 @@ class DokuWikiXMLRPCError(DokuWikiError):
 
 class DokuWikiURLError(DokuWikiError):
     """Triggered when the URL supplied to DokuWikiClient is not
-    valpage_id/reachable."""
+    valid/reachable."""
 
     def __init__(self, url):
         """Initalize and call anchestor __init__()."""
