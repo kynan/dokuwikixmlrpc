@@ -20,6 +20,9 @@
 # for a copy of the GPLv2 License.
 ###############################################################################
 
+# TODO
+# allow to overwrite useragent?
+
 """DokuWiki XMLRPC module.
 
 This modules allows to interact with the XML-RPC interface of DokuWiki
@@ -304,6 +307,19 @@ class DokuWikiClient(object):
             options['pattern'] = pattern
         try:
             return self._xmlrpc.wiki.getAttachments(namespace, options)
+        except xmlrpclib.Fault, fault:
+            raise DokuWikiXMLRPCError(fault)
+
+
+    def set_locks(self, locks):
+        """
+        Lock/unlock a set of files. Locks must be a dictionary which contains
+        list of ids to lock/unlock:
+
+            locks =  { 'lock' : [], 'unlock' : [] }
+        """
+        try:
+            return self._xmlrpc.dokuwiki.setLocks(locks)
         except xmlrpclib.Fault, fault:
             raise DokuWikiXMLRPCError(fault)
 
