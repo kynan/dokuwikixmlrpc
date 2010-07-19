@@ -3,7 +3,6 @@ from distutils.core import setup
 setup(
     name = "dokuwikixmlrpc",
     version = "2010-07-19",
-    packages = ["dokuwikixmlrpc"],
     description = "DokuWiki XML-RPC module.",
     author = "Michael Klier",
     author_email = "chi@chimeric.de",
