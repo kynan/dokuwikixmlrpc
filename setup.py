@@ -4,6 +4,7 @@ setup(
     name = "dokuwikixmlrpc",
     version = "2010-07-19",
     description = "DokuWiki XML-RPC module.",
+    py_modules = ["dokuwikixmlrpc"],
     author = "Michael Klier",
     author_email = "chi@chimeric.de",
     url = "http://chimeric.de/projects/dokuwiki/dokuvimki",
