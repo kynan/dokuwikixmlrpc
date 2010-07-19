@@ -31,6 +31,7 @@ instances. It supports all methods of the DokuWiki XML-RPC interface.
 
 __all__ = [ "DokuWikiClient" ]
 __version__ = '0.1'
+__author__  = 'Michael Klier <chi@chimeric.de>'
 
 
 import xmlrpclib
