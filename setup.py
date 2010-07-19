@@ -7,7 +7,7 @@ setup(
     py_modules = ["dokuwikixmlrpc"],
     author = "Michael Klier",
     author_email = "chi@chimeric.de",
-    url = "http://chimeric.de/projects/dokuwiki/dokuwikixmlrpc",
+    url = "http://github.com/chimeric/dokuwikixmlrpc",
     download_url = "http://github.com/downloads/chimeric/dokuwikixmlrpc/dokuwikixmlrpc.tgz",
     keyword = ["xmlrpc", "dokuwiki"],
     classfiers = [
