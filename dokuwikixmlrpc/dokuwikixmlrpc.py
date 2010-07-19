@@ -29,8 +29,7 @@ This modules allows to interact with the XML-RPC interface of DokuWiki
 instances. It supports all methods of the DokuWiki XML-RPC interface.
 """
 
-__all__ = [ "DokuWikiClient" ]
-__version__ = '0.1'
+__version__ = '2010-07-19'
 __author__  = 'Michael Klier <chi@chimeric.de>'
 
 
