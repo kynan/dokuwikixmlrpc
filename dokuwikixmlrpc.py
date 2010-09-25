@@ -211,7 +211,7 @@ class DokuWikiClient(object):
             raise DokuWikiXMLRPCError(fault)
 
 
-    def put_page(self, page_id, text, summary='', minor=None):
+    def put_page(self, page_id, text, summary='', minor=False):
         """Send a Wiki page to the remote Wiki.
 
         Keyword arguments:
@@ -229,6 +229,12 @@ class DokuWikiClient(object):
         except xmlrpclib.Fault, fault:
             raise DokuWikiXMLRPCError(fault)
 
+    def pagelist(self, namespace):
+        """Lists all pages within a given namespace."""
+        try:
+            return self._xmlrpc.dokuwiki.getPagelist(namespace, {})
+        except xmlrpclib.Fault, fault:
+            raise DokuWikiXMLRPCError(fault)
 
     def all_pages(self):
         """List all pages of the remote Wiki."""
