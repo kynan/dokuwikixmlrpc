@@ -60,8 +60,8 @@ class DokuWikiXMLRPCError(DokuWikiError):
 
     def __str__(self):
         """Format returned error message."""
-        return '<%s %s: \'%s\'>' % (self.__class__.__name__, 
-                                    self.page_id, 
+        return '<%s %s: \'%s\'>' % (self.__class__.__name__,
+                                    self.page_id,
                                     self.message)
 
 
@@ -76,7 +76,7 @@ class DokuWikiURLError(DokuWikiError):
 
     def __str__(self):
         """Format returned error message."""
-        return '%s: Could not connect to <%s>' % (self.__class__.__name__, 
+        return '%s: Could not connect to <%s>' % (self.__class__.__name__,
                                                   self.message)
 
 
@@ -87,7 +87,7 @@ class DokuWikiClient(object):
     return exactly the data returned by DokuWikis XML-RPC interface. If
     something goes wrong a method raises a DokuWikiXMLRPCError which contains
     information reported by the XML-RCP interface.
-                
+
     """
 
     def __init__(self, url, user, passwd, http_basic_auth=False):
@@ -103,7 +103,7 @@ class DokuWikiClient(object):
         self._user = user
         self._passwd = passwd
         self._http_basic_auth = http_basic_auth
-        self._user_agent = ' '.join([ 'DokuWikiXMLRPC ', 
+        self._user_agent = ' '.join([ 'DokuWikiXMLRPC ',
                                       __version__,
                                       'by (www.chimeric.de)' ])
 
@@ -123,7 +123,7 @@ class DokuWikiClient(object):
             raise DokuWikiURLError(self._url)
         except HTTPError:
             raise DokuWikiURLError(self._url)
-        
+
         script = '/lib/exe/xmlrpc.php'
 
         if not self._http_basic_auth:
@@ -160,7 +160,7 @@ class DokuWikiClient(object):
 
         Optionally return the information of a Wiki page version (see
         page_versions())
-        
+
         """
         try:
             if not revision:
@@ -184,7 +184,7 @@ class DokuWikiClient(object):
 
         Optionally return the information of a Wiki page version (see
         page_versions())
-        
+
         """
         try:
             if not revision:
@@ -200,7 +200,7 @@ class DokuWikiClient(object):
 
         Optionally return the (X)HTML body of a given Wiki page version (see
         page_versions())
-        
+
         """
         try:
             if not revision:
@@ -219,7 +219,7 @@ class DokuWikiClient(object):
         text -- raw Wiki text (UTF-8 encoded)
         sum -- summary
         minor -- mark as minor edit
-        
+
         """
         try:
             params = {}
@@ -360,7 +360,7 @@ class Callback(object):
     Instantiates a new DokuWikiClient. It retrieves and outputs the data for
     the specified callback. The callback is specified in the option parser. The
     option destination has to match a DokuWikiClient method.
-    
+
     """
     def __init__(self, option, opt_str, value, parser):
         """Initalize callback object."""
@@ -454,16 +454,16 @@ def main():
     The module can also be used as simple command line client to query a remote
     Wiki. It provides all methods supported by DokuWikis XML-RPC interface. The
     retrieved data is slightly formatted when output.
-    
+
     """
     from optparse import OptionParser
-    
+
     parser = OptionParser(version = '%prog ' + __version__)
 
     parser.set_usage('%prog -u <username> -w <wikiurl> -p <passwd> [options] [wiki:page]')
 
-    parser.add_option('-u', '--user', 
-            dest = 'user', 
+    parser.add_option('-u', '--user',
+            dest = 'user',
             help = 'Username to use when authenticating at the remote Wiki.')
 
     parser.add_option('-w', '--wiki',
@@ -526,7 +526,7 @@ def main():
             dest = 'timestamp',
             type = 'int',
             help = 'Revision timestamp.')
-    
+
     parser.add_option('--http-basic-auth',
             dest = 'http_basic_auth',
             action = 'store_true',
@@ -546,4 +546,4 @@ def main():
 if __name__ == '__main__':
     main()
 
-# vim:ts=4:sw=4:tw=79:et:enc=utf-8:
+# vim:ts=4:sw=4:tw=79:et:
