@@ -66,6 +66,22 @@ class DokuWikiXMLRPCError(DokuWikiError):
                                     self.message)
 
 
+class DokuWikiXMLRPCProtocolError(DokuWikiError):
+    """Triggered on XMLRPC protocol faults."""
+
+    def __init__(self, obj):
+        """Initalize and call anchestor __init__()."""
+        DokuWikiError.__init__(self)
+        self.url = obj.url
+        self.errcode = obj.errcode
+        self.errmsg = obj.errmsg
+
+    def __str__(self):
+        """Format returned error message."""
+        return '<%s %s: \'%s\' at %s>' % (self.__class__.__name__,
+                                          self.errcode, self.errmsg, self.url)
+
+
 class DokuWikiURLError(DokuWikiError):
     """Triggered when the URL supplied to DokuWikiClient is not
     valid/reachable."""
