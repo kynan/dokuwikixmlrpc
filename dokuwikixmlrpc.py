@@ -356,14 +356,11 @@ class Callback(object):
                                                parser.values.user,
                                                parser.values.passwd,
                                                parser.values.http_basic_auth)
-            except DokuWikiXMLRPCError, error:
-                parser.error(error)
 
-            except DokuWikiURLError, error:
-                parser.error(error)
-
-            self._parser = parser
-            (data, output_format) = self.dispatch(option.dest, value)
+                self._parser = parser
+                (data, output_format) = self.dispatch(option.dest, value)
+            except DokuWikiError as error:
+                parser.error(str(error))
 
             if data:
                 if output_format == 'plain':
