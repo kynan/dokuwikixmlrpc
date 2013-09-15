@@ -90,7 +90,7 @@ class DokuWikiClient(object):
 
     """
 
-    def __init__(self, url, user, passwd, http_basic_auth=False):
+    def __init__(self, url, user, passwd, http_basic_auth=False, timeout=10):
         """Initalize everything.
 
         Try to get a XML-RPC object. If this step fails a DokuWIKIXMLRPCError
@@ -103,6 +103,7 @@ class DokuWikiClient(object):
         self._user = user
         self._passwd = passwd
         self._http_basic_auth = http_basic_auth
+        self._timeout = timeout
         self._user_agent = ' '.join([ 'DokuWikiXMLRPC ',
                                       __version__,
                                       'by (www.chimeric.de)' ])
@@ -118,7 +119,7 @@ class DokuWikiClient(object):
     def _xmlrpc_init(self):
         """Initialize the XMLRPC object."""
         try:
-            urlopen(self._url + '/lib/exe/xmlrpc.php?')
+            urlopen(self._url + '/lib/exe/xmlrpc.php?', timeout=self._timeout)
         except ValueError:
             raise DokuWikiURLError(self._url)
         except HTTPError:
