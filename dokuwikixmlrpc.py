@@ -122,7 +122,6 @@ class DokuWikiClient(object):
                                       'by (www.chimeric.de)' ])
 
         self._xmlrpc = self._xmlrpc_init()
-        self.dokuwiki_version = self._dokuwiki_version()
 
 
     def _xmlrpc_init(self):
@@ -147,9 +146,10 @@ class DokuWikiClient(object):
         return xmlrpclib.ServerProxy(url)
 
 
+    @property
     @checkerr
-    def _dokuwiki_version(self):
-        """Return the DokuWiki version reported by the remote Wiki."""
+    def dokuwiki_version(self):
+        """DokuWiki version reported by the remote Wiki."""
         return self._xmlrpc.dokuwiki.getVersion()
 
 
