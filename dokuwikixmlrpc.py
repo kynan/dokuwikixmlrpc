@@ -106,6 +106,8 @@ def checkerr(f):
             return f(*args, **kwargs)
         except xmlrpclib.Fault as fault:
             raise DokuWikiXMLRPCError(fault)
+        except xmlrpclib.ProtocolError as fault:
+            raise DokuWikiXMLRPCProtocolError(fault)
     return catch_xmlerror
 
 
