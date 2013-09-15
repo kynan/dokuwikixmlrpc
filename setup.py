@@ -1,5 +1,11 @@
 # dokuwikixmlrpc's setup.py
-from distutils.core import setup
+
+# Try importing setup from setuptools to get e.g. the develop command
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
+
 setup(
     name = "dokuwikixmlrpc",
     version = "2010-07-19",
