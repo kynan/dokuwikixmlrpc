@@ -35,6 +35,7 @@ __author__  = 'Michael Klier <chi@chimeric.de>'
 
 import xmlrpclib
 import base64
+from functools import wraps
 from urllib import urlencode
 from urllib2 import urlopen
 from urllib2 import URLError
@@ -78,6 +79,18 @@ class DokuWikiURLError(DokuWikiError):
         """Format returned error message."""
         return '%s: Could not connect to <%s>' % (self.__class__.__name__,
                                                   self.message)
+
+
+def checkerr(f):
+    """Decorator that calls the given function and catches
+    :class:`xmlrpclib.Fault` exceptions."""
+    @wraps(f)
+    def catch_xmlerror(*args, **kwargs):
+        try:
+            return f(*args, **kwargs)
+        except xmlrpclib.Fault as fault:
+            raise DokuWikiXMLRPCError(fault)
+    return catch_xmlerror
 
 
 class DokuWikiClient(object):
