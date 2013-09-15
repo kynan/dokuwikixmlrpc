@@ -37,7 +37,7 @@ import xmlrpclib
 import base64
 from urllib import urlencode
 from urllib2 import urlopen
-from urllib2 import HTTPError
+from urllib2 import URLError
 
 
 class DokuWikiError(Exception):
@@ -120,9 +120,7 @@ class DokuWikiClient(object):
         """Initialize the XMLRPC object."""
         try:
             urlopen(self._url + '/lib/exe/xmlrpc.php?', timeout=self._timeout)
-        except ValueError:
-            raise DokuWikiURLError(self._url)
-        except HTTPError:
+        except (ValueError, URLError):
             raise DokuWikiURLError(self._url)
 
         script = '/lib/exe/xmlrpc.php'
