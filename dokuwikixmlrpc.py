@@ -29,16 +29,26 @@ This modules allows to interact with the XML-RPC interface of DokuWiki
 instances. It supports all methods of the DokuWiki XML-RPC interface.
 """
 
+from __future__ import print_function
+
 __version__ = '2010-07-19'
 __author__  = 'Michael Klier <chi@chimeric.de>'
 
 
-import xmlrpclib
 import base64
 from functools import wraps
-from urllib import urlencode
-from urllib2 import urlopen
-from urllib2 import URLError
+# Python 2 imports
+try:
+    from urllib import urlencode
+    from urllib2 import urlopen
+    from urllib2 import URLError
+    import xmlrpclib
+# Python 3 imports
+except ImportError:
+    from urllib.parse import urlencode
+    from urllib.request import urlopen
+    from urllib.error import URLError
+    import xmlrpc.client as xmlrpclib
 
 
 class DokuWikiError(Exception):
@@ -364,21 +374,21 @@ class Callback(object):
 
             if data:
                 if output_format == 'plain':
-                    print data
+                    print(data)
 
                 elif output_format == 'list':
                     for item in data:
-                        print item
+                        print(item)
 
                 elif output_format == 'dict':
                     if type(data) == type([]):
                         for item in data:
                             for key in item.keys():
-                                print '%s: %s' % (key, item[key])
-                            print "\n"
+                                print('%s: %s' % (key, item[key]))
+                            print("\n")
                     else:
                         for key in data.keys():
-                            print '%s: %s' % (key, data[key])
+                            print('%s: %s' % (key, data[key]))
 
 
         else:
