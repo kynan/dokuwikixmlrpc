@@ -30,12 +30,6 @@ instances. It supports all methods of the DokuWiki XML-RPC interface.
 """
 
 from __future__ import print_function
-
-__version__ = '2010-07-19'
-__author__  = 'Michael Klier <chi@chimeric.de>'
-
-
-import base64
 from functools import wraps
 # Python 2 imports
 try:
@@ -49,6 +43,9 @@ except ImportError:
     from urllib.request import urlopen
     from urllib.error import URLError
     import xmlrpc.client as xmlrpclib
+
+__version__ = '2010-07-19'
+__author__ = 'Michael Klier <chi@chimeric.de>'
 
 
 class DokuWikiError(Exception):
@@ -145,12 +142,11 @@ class DokuWikiClient(object):
         self._passwd = passwd
         self._http_basic_auth = http_basic_auth
         self._timeout = timeout
-        self._user_agent = ' '.join([ 'DokuWikiXMLRPC ',
-                                      __version__,
-                                      'by (www.chimeric.de)' ])
+        self._user_agent = ' '.join(['DokuWikiXMLRPC ',
+                                     __version__,
+                                     'by (www.chimeric.de)'])
 
         self._xmlrpc = self._xmlrpc_init()
-
 
     def _xmlrpc_init(self):
         """Initialize the XMLRPC object."""
@@ -162,8 +158,8 @@ class DokuWikiClient(object):
         script = '/lib/exe/xmlrpc.php'
 
         if not self._http_basic_auth:
-            url = ''.join([ self._url, script, '?',
-                         urlencode({'u': self._user, 'p':self._passwd}) ])
+            url = ''.join([self._url, script, '?',
+                           urlencode({'u': self._user, 'p': self._passwd})])
         else:
             proto, url = self._url.split('://')
             url = proto + '://' + self._user + ':' + self._passwd + '@' + url
@@ -173,19 +169,16 @@ class DokuWikiClient(object):
 
         return xmlrpclib.ServerProxy(url)
 
-
     @property
     @checkerr
     def dokuwiki_version(self):
         """DokuWiki version reported by the remote Wiki."""
         return self._xmlrpc.dokuwiki.getVersion()
 
-
     @checkerr
     def rpc_version_supported(self):
         """Return the supported RPC version reported by the remote Wiki."""
         return self._xmlrpc.wiki.getRPCVersionSupported()
-
 
     @checkerr
     def page(self, page_id, revision=None):
@@ -200,12 +193,10 @@ class DokuWikiClient(object):
         else:
             return self._xmlrpc.wiki.getPageVersion(page_id, revision)
 
-
     @checkerr
     def page_versions(self, page_id, offset=0):
         """Return a list of available versions for a Wiki page."""
         return self._xmlrpc.wiki.getPageVersions(page_id, offset)
-
 
     @checkerr
     def page_info(self, page_id, revision=None):
@@ -220,7 +211,6 @@ class DokuWikiClient(object):
         else:
             return self._xmlrpc.wiki.getPageInfoVersion(page_id, revision)
 
-
     @checkerr
     def page_html(self, page_id, revision=None):
         """Return the (X)HTML body of a Wiki page.
@@ -233,7 +223,6 @@ class DokuWikiClient(object):
             return self._xmlrpc.wiki.getPageHTML(page_id)
         else:
             return self._xmlrpc.wiki.getPageHTMLVersion(page_id, revision)
-
 
     @checkerr
     def put_page(self, page_id, text, summary='', minor=False):
@@ -277,24 +266,20 @@ class DokuWikiClient(object):
         """List all pages of the remote Wiki."""
         return self._xmlrpc.wiki.getAllPages()
 
-
     @checkerr
     def backlinks(self, page_id):
         """Return a list of pages that link back to a Wiki page."""
         return self._xmlrpc.wiki.getBackLinks(page_id)
-
 
     @checkerr
     def links(self, page_id):
         """Return a list of links contained in a Wiki page."""
         return self._xmlrpc.wiki.listLinks(page_id)
 
-
     @checkerr
     def recent_changes(self, timestamp):
         """Return the recent changes since a given timestampe (UTC)."""
         return self._xmlrpc.wiki.getRecentChanges(timestamp)
-
 
     @checkerr
     def acl_check(self, page_id):
@@ -310,13 +295,13 @@ class DokuWikiClient(object):
         return self._xmlrpc.wiki.getAttachment(file_id).data
 
     @checkerr
-    def put_file(self, file_id, data, overwrite = False):
+    def put_file(self, file_id, data, overwrite=False):
         """Upload a file to a remote Wiki."""
         # wrap/unwrap data into a binary object instead of base64-encoding/decoding it
         # https://bugs.dokuwiki.org/index.php?do=details&task_id=2662#comment5199
         # and http://docs.python.org/2/library/xmlrpclib.html#binary-objects
-        return self._xmlrpc.wiki.putAttachment(file_id,
-               xmlrpclib.Binary (data), {'ow': overwrite})
+        return self._xmlrpc.wiki.putAttachment(file_id, xmlrpclib.Binary(data),
+                                               {'ow': overwrite})
 
     @checkerr
     def delete_file(self, file_id):
@@ -329,7 +314,7 @@ class DokuWikiClient(object):
         return self._xmlrpc.wiki.getAttachmentInfo(file_id)
 
     @checkerr
-    def list_files(self, namespace, recursive = False, pattern = None):
+    def list_files(self, namespace, recursive=False, pattern=None):
         """List files in a Wiki namespace."""
         options = {}
         if recursive:
@@ -337,7 +322,6 @@ class DokuWikiClient(object):
         if pattern:
             options['pattern'] = pattern
         return self._xmlrpc.wiki.getAttachments(namespace, options)
-
 
     @checkerr
     def set_locks(self, locks):
@@ -381,7 +365,7 @@ class Callback(object):
                         print(item)
 
                 elif output_format == 'dict':
-                    if type(data) == type([]):
+                    if isinstance(data, list):
                         for item in data:
                             for key in item.keys():
                                 print('%s: %s' % (key, item[key]))
@@ -390,10 +374,8 @@ class Callback(object):
                         for key in data.keys():
                             print('%s: %s' % (key, data[key]))
 
-
         else:
             parser.print_usage()
-
 
     def _get_page_id(self):
         """Check if the additional arguments contain a Wiki page id."""
@@ -401,7 +383,6 @@ class Callback(object):
             return self._parser.rargs.pop()
         except IndexError:
             self._parser.error('You have to specify a Wiki page.')
-
 
     def dispatch(self, option, value):
         """Dispatch the provided callback."""
@@ -451,87 +432,87 @@ def main():
     """
     from optparse import OptionParser
 
-    parser = OptionParser(version = '%prog ' + __version__)
+    parser = OptionParser(version='%prog ' + __version__)
 
     parser.set_usage('%prog -u <username> -w <wikiurl> -p <passwd> [options] [wiki:page]')
 
     parser.add_option('-u', '--user',
-            dest = 'user',
-            help = 'Username to use when authenticating at the remote Wiki.')
+                      dest='user',
+                      help='Username to use when authenticating at the remote Wiki.')
 
     parser.add_option('-w', '--wiki',
-            dest = 'wiki',
-            help = 'The remote wiki.')
+                      dest='wiki',
+                      help='The remote wiki.')
 
     parser.add_option('-p', '--passwd',
-            dest = 'passwd',
-            help = 'The user password.')
+                      dest='passwd',
+                      help='The user password.')
 
     parser.add_option('--raw',
-            dest = 'page',
-            action = 'callback',
-            callback = Callback,
-            help = 'Return the raw Wiki text of a Wiki page.')
+                      dest='page',
+                      action='callback',
+                      callback=Callback,
+                      help='Return the raw Wiki text of a Wiki page.')
 
     parser.add_option('--html',
-            dest = 'page_html',
-            action = 'callback',
-            callback = Callback,
-            help = 'Return the HTML body of a Wiki page.')
+                      dest='page_html',
+                      action='callback',
+                      callback=Callback,
+                      help='Return the HTML body of a Wiki page.')
 
     parser.add_option('--info',
-            dest = 'page_info',
-            action = 'callback',
-            callback = Callback,
-            help = 'Return some information about a Wiki page.')
+                      dest='page_info',
+                      action='callback',
+                      callback=Callback,
+                      help='Return some information about a Wiki page.')
 
     parser.add_option('--changes',
-            dest = 'recent_changes',
-            action = 'callback',
-            callback = Callback,
-            help = 'List recent changes of the Wiki since timestamp.')
+                      dest='recent_changes',
+                      action='callback',
+                      callback=Callback,
+                      help='List recent changes of the Wiki since timestamp.')
 
     parser.add_option('--revisions',
-            dest = 'page_versions',
-            action = 'callback',
-            callback = Callback,
-            help = 'Liste page revisions since timestamp.')
+                      dest='page_versions',
+                      action='callback',
+                      callback=Callback,
+                      help='Liste page revisions since timestamp.')
 
     parser.add_option('--backlinks',
-            dest = 'backlinks',
-            action = 'callback',
-            callback = Callback,
-            help = 'Return a list of pages that link back to a Wiki page.')
+                      dest='backlinks',
+                      action='callback',
+                      callback=Callback,
+                      help='Return a list of pages that link back to a Wiki page.')
 
     parser.add_option('--allpages',
-            dest = 'all_pages',
-            action = 'callback',
-            callback = Callback,
-            help = 'List all pages in the remote Wiki.')
+                      dest='all_pages',
+                      action='callback',
+                      callback=Callback,
+                      help='List all pages in the remote Wiki.')
 
     parser.add_option('--links',
-            dest = 'links',
-            action = 'callback',
-            callback = Callback,
-            help = 'Return a list of links contained in a Wiki page.')
+                      dest='links',
+                      action='callback',
+                      callback=Callback,
+                      help='Return a list of links contained in a Wiki page.')
 
     parser.add_option('--time',
-            dest = 'timestamp',
-            type = 'int',
-            help = 'Revision timestamp.')
+                      dest='timestamp',
+                      type='int',
+                      help='Revision timestamp.')
 
     parser.add_option('--http-basic-auth',
-            dest = 'http_basic_auth',
-            action = 'store_true',
-            help = 'Use HTTP Basic Authentication.',
-            default=False)
+                      dest='http_basic_auth',
+                      action='store_true',
+                      help='Use HTTP Basic Authentication.',
+                      default=False)
 
     parser.add_option('--append',
-            dest = 'append_page',
-            action = 'callback',
-            callback = Callback,
-            type = 'string',
-            help = 'Append the given text to the wiki page.')
+                      dest='append_page',
+                      action='callback',
+                      callback=Callback,
+                      type='string',
+                      help='Append the given text to the wiki page.')
 
     parser.parse_args()
 
