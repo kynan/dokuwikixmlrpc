@@ -278,15 +278,21 @@ class DokuWikiClient(object):
     def get_file(self, file_id):
         """Download a file from a remote Wiki."""
         try:
-            return base64.b64decode(self._xmlrpc.wiki.getAttachment(file_id))
+            # wrap/unwrap data into a binary object instead of base64-encoding/decoding it
+            # https://bugs.dokuwiki.org/index.php?do=details&task_id=2662#comment5199
+            # and http://docs.python.org/2/library/xmlrpclib.html#binary-objects
+            return self._xmlrpc.wiki.getAttachment(file_id).data
         except xmlrpclib.Fault, fault:
             raise DokuWikiXMLRPCError(fault)
 
     def put_file(self, file_id, data, overwrite = False):
         """Upload a file to a remote Wiki."""
         try:
-            return self._xmlrpc.wiki.putAttachment(file_id, 
-                   base64.b64encode(data), {'ow': overwrite})
+            # wrap/unwrap data into a binary object instead of base64-encoding/decoding it
+            # https://bugs.dokuwiki.org/index.php?do=details&task_id=2662#comment5199
+            # and http://docs.python.org/2/library/xmlrpclib.html#binary-objects
+            return self._xmlrpc.wiki.putAttachment(file_id,
+                   xmlrpclib.Binary (data), {'ow': overwrite})
         except xmlrpclib.Fault, fault:
             raise DokuWikiXMLRPCError(fault)
 
