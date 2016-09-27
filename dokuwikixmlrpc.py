@@ -377,7 +377,7 @@ class Callback(object):
                 parser.error(error)
 
             self._parser = parser
-            (data, output_format) = self.dispatch(option.dest)
+            (data, output_format) = self.dispatch(option.dest, value)
 
             if data:
                 if output_format == 'plain':
@@ -410,7 +410,7 @@ class Callback(object):
             self._parser.error('You have to specify a Wiki page.')
 
 
-    def dispatch(self, option):
+    def dispatch(self, option, value):
         """Dispatch the provided callback."""
 
         callback = self.dokuwiki.__getattribute__(option)
