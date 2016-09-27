@@ -427,12 +427,7 @@ class Callback(object):
 
         elif option == 'append_page':
             page_id = self._get_page_id()
-            append_text = self._parser.values.append_text
-            if not append_text:
-                self._parser.error('You have to specify the text to append.')
-                return
-            else:
-                return (callback(page_id, append_text), 'dict')
+            return (callback(page_id, value), 'dict')
 
         elif option == 'backlinks':
             page_id = self._get_page_id()
@@ -538,17 +533,12 @@ def main():
             help = 'Use HTTP Basic Authentication.',
             default=False)
 
-    parser.add_option('--atext',
-            dest = 'append_text',
-            action = 'store',
-            type = 'string',
-            help = 'Define text to append.')
-
     parser.add_option('--append',
             dest = 'append_page',
             action = 'callback',
             callback = Callback,
-            help = 'Append the text given with --atext to the wiki page.')
+            type = 'string',
+            help = 'Append the given text to the wiki page.')
 
     parser.parse_args()
 
