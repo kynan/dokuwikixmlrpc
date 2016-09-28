@@ -43,6 +43,7 @@ except ImportError:
     from urllib.request import urlopen
     from urllib.error import URLError
     import xmlrpc.client as xmlrpclib
+from xml.parsers.expat import ExpatError
 
 __version__ = '2010-07-19'
 __author__ = 'Michael Klier <chi@chimeric.de>'
@@ -115,6 +116,11 @@ def checkerr(f):
             raise DokuWikiXMLRPCError(fault)
         except xmlrpclib.ProtocolError as fault:
             raise DokuWikiXMLRPCProtocolError(fault)
+        # An ExpatError is raised if xmlrpclib cannot parse the response e.g.
+        # because it is not valid XML. DokuWiki sends the plain text response
+        # "XML-RPC server not enabled" if the XML RPC interface is not enabled.
+        except ExpatError:
+            raise DokuWikiError('Failed to parse response. Is the DokuWiki XML-RPC server enabled?')
     return catch_xmlerror
 
 
