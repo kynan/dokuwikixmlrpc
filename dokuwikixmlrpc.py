@@ -339,6 +339,26 @@ class DokuWikiClient(object):
         """
         return self._xmlrpc.dokuwiki.setLocks(locks)
 
+    @checkerr
+    def struct_getdata(self, page_id, schema = '',timestamp=0):
+        """Get the structured data of a given page"""
+        return self._xmlrpc.plugin.struct.getData(page_id, schema,timestamp)
+
+    @checkerr
+    def struct_savedata(self, page_id, params = {},summary=''):
+        """Saves data for a given page (creates a new revision)"""
+        return self._xmlrpc.plugin.struct.saveData(page_id, params,summary)
+
+    @checkerr
+    def struct_getschema(self, schema = ''):
+        """Get the structured data of a given page"""
+        return self._xmlrpc.plugin.struct.getSchema(schema)
+
+    @checkerr
+    def struct_getaggregationdata(self, schema_names = {},columns={}, aggreg_logic={}, column='' ):
+        """Get the data that would be shown in an aggregation"""
+        return self._xmlrpc.plugin.struct.getAggregationData(schema_names,columns, aggreg_logic,column)
+
 
 class Callback(object):
     """Callback class used by the option parser.
