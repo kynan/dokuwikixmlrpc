@@ -350,7 +350,7 @@ class DokuWikiClient(object):
         return self._xmlrpc.plugin.struct.saveData(page_id, params,summary)
 
     @checkerr
-    def struct_getschema(self, schema = ''):
+    def struct_getschema(self, schema=''):
         """Get the structured data of a given page"""
         return self._xmlrpc.plugin.struct.getSchema(schema)
 
