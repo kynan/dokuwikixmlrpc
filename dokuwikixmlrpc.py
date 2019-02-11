@@ -346,7 +346,7 @@ class DokuWikiClient(object):
 
     @checkerr
     def struct_savedata(self, page_id, params={}, summary=''):
-        """Saves data for a given page (creates a new revision)"""
+        """Saves data for a given page (creates a new revision)."""
         return self._xmlrpc.plugin.struct.saveData(page_id, params,summary)
 
     @checkerr
