@@ -357,7 +357,7 @@ class DokuWikiClient(object):
     @checkerr
     def struct_getaggregationdata(self, schema_names={}, columns={}, aggregation_logic={}, column=''):
         """Get the data that would be shown in an aggregation"""
-        return self._xmlrpc.plugin.struct.getAggregationData(schema_names,columns, aggreg_logic,column)
+        return self._xmlrpc.plugin.struct.getAggregationData(schema_names, columns, aggregation_logic, column)
 
 
 class Callback(object):
