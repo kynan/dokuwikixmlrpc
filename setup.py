@@ -20,7 +20,7 @@ setup(
         "Programming Language :: Python",
         "Environment :: Other Environment",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: GNU General Public License (GPL)",
+        "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Topic :: Software Development :: Libraries :: Python Modules",
         ]
