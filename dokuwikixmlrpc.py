@@ -45,8 +45,9 @@ except ImportError:
     import xmlrpc.client as xmlrpclib
 from xml.parsers.expat import ExpatError
 
-__version__ = '2010-07-19'
+__version__ = '2020.5.23'
 __author__ = 'Michael Klier <chi@chimeric.de>'
+__maintainer__ = 'Florian Rathgeber'
 
 
 class DokuWikiError(Exception):

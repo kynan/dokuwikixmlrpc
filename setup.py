@@ -9,7 +9,7 @@ with open('README.rst') as f:
 
 setup(
     name = "dokuwikixmlrpc",
-    version = "2010-07-19",
+    version = "2020.5.23",
     description="DokuWiki XML-RPC module.",
     long_description=long_description,
     py_modules = ["dokuwikixmlrpc"],
