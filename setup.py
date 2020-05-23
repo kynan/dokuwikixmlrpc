@@ -1,5 +1,3 @@
-# dokuwikixmlrpc's setup.py
-
 # Try importing setup from setuptools to get e.g. the develop command
 try:
     from setuptools import setup
@@ -13,9 +11,10 @@ setup(
     py_modules = ["dokuwikixmlrpc"],
     author = "Michael Klier",
     author_email = "chi@chimeric.de",
-    url = "http://github.com/chimeric/dokuwikixmlrpc",
-    download_url = "http://github.com/downloads/chimeric/dokuwikixmlrpc/dokuwikixmlrpc.tgz",
+    url = "https://github.com/kynan/dokuwikixmlrpc",
+    download_url = "https://github.com/downloads/kynan/dokuwikixmlrpc/dokuwikixmlrpc.tgz",
     keyword = ["xmlrpc", "dokuwiki"],
+    license="License :: OSI Approved :: MIT License",
     classfiers = [
         "Programming Language :: Python",
         "Environment :: Other Environment",
