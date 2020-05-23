@@ -12,6 +12,7 @@ setup(
     version = "2020.5.23",
     description="DokuWiki XML-RPC module.",
     long_description=long_description,
+    long_description_content_type='text/x-rst',
     py_modules = ["dokuwikixmlrpc"],
     author = "Michael Klier",
     author_email = "chi@chimeric.de",
