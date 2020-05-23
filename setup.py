@@ -4,10 +4,14 @@ try:
 except ImportError:
     from distutils.core import setup
 
+with open('README.rst') as f:
+    long_description = f.read()
+
 setup(
     name = "dokuwikixmlrpc",
     version = "2010-07-19",
-    description = "DokuWiki XML-RPC module.",
+    description="DokuWiki XML-RPC module.",
+    long_description=long_description,
     py_modules = ["dokuwikixmlrpc"],
     author = "Michael Klier",
     author_email = "chi@chimeric.de",
@@ -22,6 +26,6 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Topic :: Software Development :: Libraries :: Python Modules",
-        ]
+    ],
 )
 # vim:ts=4:sw=4:et:
