@@ -157,19 +157,20 @@ class DokuWikiClient(object):
 
     def _xmlrpc_init(self):
         """Initialize the XMLRPC object."""
+        script = '/lib/exe/xmlrpc.php'
+
         try:
-            urlopen(self._url + '/lib/exe/xmlrpc.php?', timeout=self._timeout)
+            urlopen(self._url + script, timeout=self._timeout)
         except (ValueError, URLError):
             raise DokuWikiURLError(self._url)
 
-        script = '/lib/exe/xmlrpc.php'
-
-        if not self._http_basic_auth:
+        if self._http_basic_auth:
+            proto, url = self._url.split('://')
+            url = ''.join([proto, '://', self._user, ':', self._passwd, '@',
+                           url, script])
+        else:
             url = ''.join([self._url, script, '?',
                            urlencode({'u': self._user, 'p': self._passwd})])
-        else:
-            proto, url = self._url.split('://')
-            url = proto + '://' + self._user + ':' + self._passwd + '@' + url
 
         xmlrpclib.Transport.user_agent = self._user_agent
         xmlrpclib.SafeTransport.user_agent = self._user_agent
