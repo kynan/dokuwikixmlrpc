@@ -165,7 +165,7 @@ class DokuWikiClient(object):
         script = '/lib/exe/xmlrpc.php'
 
         if not self._http_basic_auth:
-            url = ''.join([self._url, script, '?',
+            url = ''.join([self._url, script, '/?',
                            urlencode({'u': self._user, 'p': self._passwd})])
         else:
             proto, url = self._url.split('://')
