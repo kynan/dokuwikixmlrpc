@@ -12,6 +12,8 @@ setup(
     py_modules=["dokuwikixmlrpc"],
     author="Michael Klier",
     author_email="chi@chimeric.de",
+    maintainer="Florian Rathgeber",
+    maintainer_email="florian.rathgeber@gmail.com",
     url="https://github.com/kynan/dokuwikixmlrpc",
     download_url="https://github.com/downloads/kynan/dokuwikixmlrpc/dokuwikixmlrpc.tgz",
     keyword=["dokuwiki", "xmlrpc", "xml-rpc"],
