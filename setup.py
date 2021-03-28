@@ -18,13 +18,12 @@ setup(
     author_email = "chi@chimeric.de",
     url = "https://github.com/kynan/dokuwikixmlrpc",
     download_url = "https://github.com/downloads/kynan/dokuwikixmlrpc/dokuwikixmlrpc.tgz",
-    keyword = ["xmlrpc", "dokuwiki"],
+    keyword = ["dokuwiki", "xmlrpc", "xml-rpc"],
     license="License :: OSI Approved :: MIT License",
-    classfiers = [
-        "Programming Language :: Python",
+    classifiers = [
+        "Development Status :: 4 - Beta",
         "Environment :: Other Environment",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         "Programming Language :: Python :: 2",
