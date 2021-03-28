@@ -151,7 +151,7 @@ class DokuWikiClient(object):
         self._context = context
         self._user_agent = ' '.join(['DokuWikiXMLRPC ',
                                      __version__,
-                                     'by (www.chimeric.de)'])
+                                     '(https://github.com/kynan/dokuwikixmlrpc)'])
 
         self._xmlrpc = self._xmlrpc_init()
 
