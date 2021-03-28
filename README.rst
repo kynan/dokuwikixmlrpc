@@ -1,9 +1,18 @@
-.. image:: https://img.shields.io/pypi/dm/dokuwikixmlrpc.svg
+.. image:: https://img.shields.io/pypi/dm/dokuwikixmlrpc
     :target: https://pypi.org/project/dokuwikixmlrpc
-.. image:: https://img.shields.io/pypi/v/dokuwikixmlrpc.svg
+.. image:: https://img.shields.io/pypi/v/dokuwikixmlrpc
     :target: https://pypi.org/project/dokuwikixmlrpc
-.. image:: https://img.shields.io/badge/license-MIT-blue.svg
+.. image:: https://img.shields.io/pypi/pyversions/dokuwikixmlrpc
+    :target: https://pypi.org/project/dokuwikixmlrpc
+.. image:: https://img.shields.io/pypi/format/dokuwikixmlrpc
+    :target: https://pypi.org/project/dokuwikixmlrpc
+.. image:: https://img.shields.io/pypi/l/dokuwikixmlrpc
     :target: https://raw.githubusercontent.com/kynan/dokuwikixmlrpc/master/LICENSE.txt
+.. image:: https://img.shields.io/github/stars/kynan/dokuwikixmlrpc?style=social
+    :target: https://github.com/kynan/dokuwikixmlrpc/stargazers
+.. image:: https://img.shields.io/github/forks/kynan/dokuwikixmlrpc?style=social
+    :target: https://github.com/kynan/dokuwikixmlrpc/network/member
+
 ``dokuwikixmlrpc`` is a python module which implements `DokuWiki's XML-RPC
 interface <https://www.dokuwiki.org/devel:xmlrpc>`_.
 
