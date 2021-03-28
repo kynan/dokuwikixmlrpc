@@ -1,25 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-###############################################################################
-# Copyright 2008 by Michael Klier <chi@chimeric.de>
-#
-# dokuwikixmlrpc - xmlrpc python module to interact with DokuWiki installations
-#
-# dokuwikixmlrpc free software: you can redistribute it and/or modify it under
-# the terms of the GNU General Public License version 2 only, as published by
-# the Free Software Foundation.
-#
-# dokuwikixmlrpc distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
-# details (a copy is included in the LICENSE file that accompanied this code).
-#
-# You should have received a copy of the GNU General Public License version 3
-# along with dokuwikixmlrpc. If not, see <http://www.gnu.org/licenses/gpl-2.0.html>
-# for a copy of the GPLv2 License.
-###############################################################################
-
 # TODO
 # allow to overwrite useragent?
 
