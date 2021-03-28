@@ -132,16 +132,15 @@ class DokuWikiClient(object):
     return exactly the data returned by DokuWikis XML-RPC interface. If
     something goes wrong a method raises a DokuWikiXMLRPCError which contains
     information reported by the XML-RCP interface.
-
     """
 
-    def __init__(self, url, user, passwd, http_basic_auth=False, timeout=10):
-        """Initalize everything.
+    def __init__(self, url, user, passwd, http_basic_auth=False, timeout=10,
+                 context=None):
+        """Create DokuWiki XMLRPC client.
 
         Try to get a XML-RPC object. If this step fails a DokuWIKIXMLRPCError
         is raised. If the supplied URL is not reachable we raise a
         DokuWikiURLError. Use these to catch bad user input.
-
         """
 
         self._url = url
@@ -149,6 +148,7 @@ class DokuWikiClient(object):
         self._passwd = passwd
         self._http_basic_auth = http_basic_auth
         self._timeout = timeout
+        self._context = context
         self._user_agent = ' '.join(['DokuWikiXMLRPC ',
                                      __version__,
                                      'by (www.chimeric.de)'])
@@ -175,7 +175,7 @@ class DokuWikiClient(object):
         xmlrpclib.Transport.user_agent = self._user_agent
         xmlrpclib.SafeTransport.user_agent = self._user_agent
 
-        return xmlrpclib.ServerProxy(url)
+        return xmlrpclib.ServerProxy(url, context=self._context)
 
     @property
     @checkerr
