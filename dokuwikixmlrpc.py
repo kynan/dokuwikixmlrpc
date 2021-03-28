@@ -26,7 +26,7 @@ except ImportError:
     import xmlrpc.client as xmlrpclib
 from xml.parsers.expat import ExpatError
 
-__version__ = '2020.5.23'
+__version__ = '2021.3.28'
 __author__ = 'Michael Klier <chi@chimeric.de>'
 __maintainer__ = 'Florian Rathgeber'
 

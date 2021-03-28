@@ -5,7 +5,7 @@ with open("README.rst") as f:
 
 setup(
     name="dokuwikixmlrpc",
-    version="2020.5.23",
+    version="2021.3.28",
     description="DokuWiki XML-RPC module.",
     long_description=long_description,
     long_description_content_type="text/x-rst",
