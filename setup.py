@@ -1,8 +1,4 @@
-# Try importing setup from setuptools to get e.g. the develop command
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+from setuptools import setup
 
 with open('README.rst') as f:
     long_description = f.read()
