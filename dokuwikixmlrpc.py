@@ -136,6 +136,7 @@ class DokuWikiClient(object):
 
         self._xmlrpc = self._xmlrpc_init()
 
+    @checkerr
     def _xmlrpc_init(self):
         """Initialize the XMLRPC object."""
         script = '/lib/exe/xmlrpc.php'
