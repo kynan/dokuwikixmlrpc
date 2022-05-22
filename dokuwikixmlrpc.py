@@ -247,9 +247,9 @@ class DokuWikiClient(object):
         self._xmlrpc.dokuwiki.appendPage(page_id, text, params)
 
     @checkerr
-    def pagelist(self, namespace):
+    def pagelist(self, namespace, opts = {'depth': 0, 'hash': False, 'skipacl': False}):
         """Lists all pages within a given namespace."""
-        return self._xmlrpc.dokuwiki.getPagelist(namespace, {})
+        return self._xmlrpc.dokuwiki.getPagelist(namespace, opts)
 
     @checkerr
     def all_pages(self):
